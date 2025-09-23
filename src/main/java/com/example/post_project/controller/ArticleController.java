@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.post_project.dto.ArticleDto;
 import com.example.post_project.service.ArticleService;
-import com.mysql.cj.protocol.x.Ok;
+// import com.mysql.cj.protocol.x.Ok;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +26,8 @@ public class ArticleController {
     @GetMapping("/articles")
     public ResponseEntity<List<ArticleDto>> getArticles() {
         List<ArticleDto> articles = articleService.retrieveArticleList();
+
+        // ResponseEntity는 HttpResponse
         // return ResponseEntity.ok().body(articles);              // builder pattern
         return new ResponseEntity<>(articles, HttpStatus.OK);   // 객체 생성
     }

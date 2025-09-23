@@ -23,6 +23,6 @@ public class ArticleService {
 
     // 게시글 목록 조회
     public List<ArticleDto> retrieveArticleList() {
-        return articleMapper.selectArtivcleList();        
+        return articleMapper.selectArticleList();        
     }
 }

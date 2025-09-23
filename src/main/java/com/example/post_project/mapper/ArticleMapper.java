@@ -12,6 +12,6 @@ import com.example.post_project.dto.ArticleDto;
 public interface ArticleMapper {
 
     // 게시글 목록 조회
-    List<ArticleDto> selectArtivcleList();
+    List<ArticleDto> selectArticleList();
     
 }

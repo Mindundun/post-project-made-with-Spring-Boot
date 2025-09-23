@@ -11,7 +11,7 @@
       contents,
       writer,
       reg_date AS regDate
-    FROM ArticleDto
+    FROM article
     ORDER BY id DESC
   </select>
 </mapper>
