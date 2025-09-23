@@ -13,5 +13,9 @@ public interface ArticleMapper {
 
     // 게시글 목록 조회
     List<ArticleDto> selectArticleList();
+
+    // 게시글 등록
+    void insertArticle(ArticleDto article);
+
     
 }

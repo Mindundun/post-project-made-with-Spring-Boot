@@ -16,6 +16,6 @@ public class ArticleDto {
     private int id;
     private String title;
     private String writer;
-    private String content;
+    private String contents;
     private LocalDateTime regDate;
 }

@@ -25,4 +25,10 @@ public class ArticleService {
     public List<ArticleDto> retrieveArticleList() {
         return articleMapper.selectArticleList();        
     }
+
+    // 게시글 등록
+    public int createArticle(ArticleDto article){
+        articleMapper.insertArticle(article);
+        return article.getId(); // Id를 반환
+    }
 }
