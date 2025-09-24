@@ -28,6 +28,7 @@ public class ArticleService {
     }
 
     // 게시글 등록
+    // 게시글 등록 후 id를 반환해야하기에 리턴타입을 int
     public int createArticle(ArticleDto article){
         articleMapper.insertArticle(article);
         return article.getId(); // Id를 반환
@@ -43,5 +44,9 @@ public class ArticleService {
         return articleMapper.selectArticleById(id);
     }
 
-    
+    // 게시글 수정
+    // 수정 시 리턴할 값이 필요 없으니 void
+    public void modifyArticle(ArticleDto article){
+        articleMapper.updateArticle(article);
+    }
 }

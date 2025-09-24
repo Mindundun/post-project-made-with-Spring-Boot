@@ -22,5 +22,7 @@ public interface ArticleMapper {
     // 해당하는 id의 ArticleDto 객체
     ArticleDto selectArticleById(int id);
 
+    // 게시글 수정
+    void updateArticle(ArticleDto articleDto);
     
 }

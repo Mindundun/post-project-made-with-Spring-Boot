@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,4 +53,16 @@ public class ArticleController {
         ArticleDto article =  articleService.retrieveArticle(id);
         return ResponseEntity.ok().body(article);
     }
+
+    // 게시글 수정
+    // status : (NO_CONTENT == 204) => 요청은 정상적으로 처리되었지만, 클라이언트에게 돌려줄 콘텐츠(응답 본문)가 없음
+    @PutMapping("/articles/{id}")
+    public ResponseEntity<String> putArticle(@PathVariable(name="id") int id, @RequestBody ArticleDto article) {
+        // URL에 전달되는 id 값을 article 객체의 id 세팅
+        article.setId(id);
+
+        articleService.modifyArticle(article);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(""); // builder pattern
+    }
+
 }

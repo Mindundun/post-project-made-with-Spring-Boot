@@ -10,24 +10,30 @@
   </insert>
 
   <select id="selectArticleList" resultType="ArticleDto">
-    SELECT
-      id,
-      title,
-      contents,
-      writer,
-      reg_date AS regDate
-    FROM article
-    ORDER BY id DESC
+    SELECT id       ,
+           title    ,
+           contents ,
+           writer   ,
+           reg_date AS regDate
+      FROM article
+     ORDER BY id DESC
   </select>
 
   <select id="selectArticleById" parameterType="int" resultType="ArticleDto">
-    SELECT 
-      id,
-      title,
-      contents,
-      writer,
-      reg_date AS regDate
-    FROM article
-    WHERE id = #{id}
+    SELECT id       ,
+           title    ,
+           contents ,
+           writer   ,
+           reg_date AS regDate
+      FROM article
+     WHERE id = #{id}
   </select>
+
+  <update id="updateArticle" parameterType="ArticleDto">
+    UPDATE article
+       SET title    = #{title}    ,
+           contents = #{contents} ,
+           writer   = #{writer}
+     WHERE id = #{id}
+  </update>
 </mapper>
