@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.post_project.dto.ArticleDto;
+import com.example.post_project.exception.ArticleNotFoundException;
 import com.example.post_project.mapper.ArticleMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -34,6 +35,13 @@ public class ArticleService {
 
     // 게시글 상세 조회
     public ArticleDto retrieveArticle(int id) {
+        // ArticleNotFoundException 던지기
+        // RuntimeException은 throws하지 않고 바로 던질 수 있음
+        if (articleMapper.selectArticleById(id) == null) {
+            throw new ArticleNotFoundException("id : " + id + " is null");
+        }
         return articleMapper.selectArticleById(id);
     }
+
+    
 }
