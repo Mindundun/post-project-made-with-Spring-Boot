@@ -13,9 +13,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.post_project.dto.ArticleDto;
+import com.example.post_project.dto.Criteria;
 import com.example.post_project.service.ArticleService;
 // import com.mysql.cj.protocol.x.Ok;
 
@@ -30,14 +32,14 @@ public class ArticleController {
     private final ArticleService articleService;
 
     // 게시글 전체 조회
-    @GetMapping("/articles")
-    public ResponseEntity<List<ArticleDto>> getArticles() {
-        List<ArticleDto> articles = articleService.retrieveArticleList();
+    // @GetMapping("/articles")
+    // public ResponseEntity<List<ArticleDto>> getArticles() {
+    //     List<ArticleDto> articles = articleService.retrieveArticleList();
 
-        // ResponseEntity는 HttpResponse
-        // return ResponseEntity.ok().body(articles);              // builder pattern
-        return new ResponseEntity<>(articles, HttpStatus.OK);   // 객체 생성
-    }
+    //     // ResponseEntity는 HttpResponse
+    //     // return ResponseEntity.ok().body(articles);              // builder pattern
+    //     return new ResponseEntity<>(articles, HttpStatus.OK);   // 객체 생성
+    // }
 
     // 게시글 등록
     // Map<String, Integer로 리턴타입을 갖는 이유 : json과 같이 {"key" : value}    
@@ -52,7 +54,7 @@ public class ArticleController {
     // GetMapping의 id와 PathVariable의 name의 id가 같아야함.
     @GetMapping("/articles/{id}")
     public ResponseEntity<ArticleDto> getArticle(@PathVariable(name="id") int id) {
-        ArticleDto article =  articleService.retrieveArticle(id);
+        ArticleDto article = articleService.retrieveArticle(id);
         return ResponseEntity.ok().body(article);
     }
 
@@ -72,6 +74,17 @@ public class ArticleController {
     public ResponseEntity<String> deleteArticle(@PathVariable(name="id") int id) {
         articleService.removeArticle(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
+    }
+
+    // 게시글 검색 => /articles?keyfield=writer&keyword=박민둔
+    @GetMapping("/articles")
+    public ResponseEntity<List<ArticleDto>> getArticle(
+        @RequestParam(value = "keyfield", required = false, defaultValue = "") String keyfield,
+        @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword ) 
+    {   
+        System.out.println("keyfield : " + keyfield + ", keyword : " + keyword);
+        List<ArticleDto> articles = articleService.findArticleList(new Criteria(keyfield, keyword));
+        return ResponseEntity.ok().body(articles);
     }
 
 }

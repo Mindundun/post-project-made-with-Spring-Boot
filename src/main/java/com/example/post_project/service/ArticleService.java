@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.post_project.dto.ArticleDto;
+import com.example.post_project.dto.Criteria;
 import com.example.post_project.exception.ArticleNotFoundException;
 import com.example.post_project.mapper.ArticleMapper;
 
@@ -54,8 +55,12 @@ public class ArticleService {
     public void removeArticle(int id){
         if (articleMapper.selectArticleById(id) == null){
             throw new ArticleNotFoundException("id : " + id + " is null");
-        }
-        
+        }        
         articleMapper.deleteArticle(id);        
+    }
+
+    // 게시글 검색
+    public List<ArticleDto> findArticleList(Criteria criteria){
+        return articleMapper.findArticleList(criteria);
     }
 }

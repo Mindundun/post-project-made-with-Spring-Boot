@@ -42,4 +42,29 @@
       FROM article
      WHERE id = #{id}
   </delete>
+
+  <select id="findArticleList" parameterType="Criteria" resultType="ArticleDto">
+    SELECT id       ,
+           title    ,
+           contents ,
+           writer   ,
+           reg_date AS regDate
+      FROM article
+    <if test="keyfield != '' and keyword != ''">
+      <trim prefix="WHERE"> <!-- <where>도 가능 -->      
+        <choose>
+          <when test="keyfield == 'title'">
+            title Like CONCAT('%',#{keyword},'%')
+          </when>
+          <when test="keyfield == 'contents'">
+            contents Like CONCAT('%',#{keyword},'%')
+          </when>
+          <when test="keyfield == 'writer'">
+            writer Like CONCAT('%',#{keyword},'%')
+          </when>
+        </choose>        
+      </trim>
+    </if>
+     ORDER BY id DESC
+  </select>
 </mapper>
