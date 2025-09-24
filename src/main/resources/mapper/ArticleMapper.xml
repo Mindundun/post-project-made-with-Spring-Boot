@@ -19,4 +19,15 @@
     FROM article
     ORDER BY id DESC
   </select>
+
+  <select id="selectArticleById" parameterType="int" resultType="ArticleDto">
+    SELECT 
+      id,
+      title,
+      contents,
+      writer,
+      reg_date AS regDate
+    FROM article
+    WHERE id = #{id}
+  </select>
 </mapper>

@@ -12,10 +12,15 @@ import com.example.post_project.dto.ArticleDto;
 public interface ArticleMapper {
 
     // 게시글 목록 조회
+    // 다수의 ArticleDto라 List로
     List<ArticleDto> selectArticleList();
 
     // 게시글 등록
     void insertArticle(ArticleDto article);
+
+    // 게시글 상세 조회
+    // 해당하는 id의 ArticleDto 객체
+    ArticleDto selectArticleById(int id);
 
     
 }

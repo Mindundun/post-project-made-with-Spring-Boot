@@ -18,6 +18,17 @@ public class ArticleMapperTest {
     private ArticleMapper articleMapper;
 
     @Test
+    void testSelectArticleList() {
+        // Given
+
+        // When
+        List<ArticleDto> articles = articleMapper.selectArticleList();
+        // Then
+        assertThat(articles).hasSize(7);
+        assertThat(articles.size()).isEqualTo(7);
+    }
+    
+    @Test
     void testInsertArticle(){
         // Given
         ArticleDto articleDto = ArticleDto.builder()
@@ -35,15 +46,33 @@ public class ArticleMapperTest {
     }
 
     @Test
-    void testSelectArticleList() {
-
+    void testSelectArticleById(){
         // Given
-
-        // When
-        List<ArticleDto> articles = articleMapper.selectArticleList();
+        
+        // when
+        ArticleDto article = articleMapper.selectArticleById(13);
         // Then
-        assertThat(articles).hasSize(7);
-        assertThat(articles.size()).isEqualTo(7);
+        assertThat(article).isNotNull();
+        System.out.println("article.getId() : " + article.getId());
+        System.out.println(article.getContents());
+        
+        // void testSelectArticleById(){
+        // // Given
+        // ArticleDto articleDto = ArticleDto.builder()
+        //     .title("박작가님의 신작 출간!")
+        //     .writer("박작가님")
+        //     .contents("박작가님의 새로운 서적이 출간됩니다. 많은 축하 부탁드립니다.")
+        //     .build();
 
+        // articleMapper.insertArticle(articleDto);
+
+        // // when
+        // ArticleDto article = articleMapper.selectArticleById(articleDto.getId());
+        // // Then
+        
+        // System.out.println("article.getId() : " + article.getId());
+        // assertThat(articleDto).isNotNull();
+        // System.out.println("article.getId() : " + article.getId());
+        // System.out.println(article.getContents());
     }
 }

@@ -31,4 +31,9 @@ public class ArticleService {
         articleMapper.insertArticle(article);
         return article.getId(); // Id를 반환
     }
+
+    // 게시글 상세 조회
+    public ArticleDto retrieveArticle(int id) {
+        return articleMapper.selectArticleById(id);
+    }
 }
