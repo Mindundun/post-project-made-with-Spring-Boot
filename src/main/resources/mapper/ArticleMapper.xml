@@ -36,4 +36,10 @@
            writer   = #{writer}
      WHERE id = #{id}
   </update>
+
+  <delete id="deleteArticle" parameterType="int">
+    DELETE 
+      FROM article
+     WHERE id = #{id}
+  </delete>
 </mapper>

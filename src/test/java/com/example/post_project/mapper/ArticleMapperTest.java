@@ -55,7 +55,7 @@ public class ArticleMapperTest {
         assertThat(article).isNotNull();
         System.out.println("article.getId() : " + article.getId());
         System.out.println(article.getContents());
-        
+
         // void testSelectArticleById(){
         // // Given
         // ArticleDto articleDto = ArticleDto.builder()
@@ -74,5 +74,54 @@ public class ArticleMapperTest {
         // assertThat(articleDto).isNotNull();
         // System.out.println("article.getId() : " + article.getId());
         // System.out.println(article.getContents());
+    }
+
+    @Test
+    void testUpdateArticle(){
+        // Given
+        // insert
+        ArticleDto articleDto = ArticleDto.builder()
+            .title("Test박작가님의 신작 출간!")
+            .writer("Test박작가님")
+            .contents("Test박작가님의 새로운 서적이 출간됩니다. 많은 축하 부탁드립니다.")
+            .build();
+
+        articleMapper.insertArticle(articleDto);
+
+        System.out.println("등록 : " + articleDto.getContents());
+
+        ArticleDto articleDto1 = ArticleDto.builder()
+                .title("개미는 둔둔")
+                .contents("오늘도 둔둔")
+                .writer("박개미민둔둔")
+                .build();
+
+        // When
+        articleMapper.updateArticle(articleDto1);
+        // Then
+        assertThat(articleDto1.getTitle()).isEqualTo("개미는 둔둔");
+    }
+
+    @Test
+    void testRemoveArticle(){
+        // Given
+        // insert
+        ArticleDto articleDto = ArticleDto.builder()
+            .title("Test박작가님의 신작 출간!")
+            .writer("Test박작가님")
+            .contents("Test박작가님의 새로운 서적이 출간됩니다. 많은 축하 부탁드립니다.")
+            .build();
+
+        articleMapper.insertArticle(articleDto);      
+
+        // When
+        int id = articleDto.getId();
+
+        articleMapper.deleteArticle(id);
+        ArticleDto foundArticle = articleMapper.selectArticleById(id);
+        // Then
+        assertThat(foundArticle).isNull();
+        
+
     }
 }

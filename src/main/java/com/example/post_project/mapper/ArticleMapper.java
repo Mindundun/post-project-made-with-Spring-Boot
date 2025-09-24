@@ -24,5 +24,8 @@ public interface ArticleMapper {
 
     // 게시글 수정
     void updateArticle(ArticleDto articleDto);
+
+    // 게시글 삭제
+    void deleteArticle(int id);
     
 }

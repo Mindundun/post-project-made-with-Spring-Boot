@@ -49,4 +49,13 @@ public class ArticleService {
     public void modifyArticle(ArticleDto article){
         articleMapper.updateArticle(article);
     }
+
+    // 게시글 삭제
+    public void removeArticle(int id){
+        if (articleMapper.selectArticleById(id) == null){
+            throw new ArticleNotFoundException("id : " + id + " is null");
+        }
+        
+        articleMapper.deleteArticle(id);        
+    }
 }
