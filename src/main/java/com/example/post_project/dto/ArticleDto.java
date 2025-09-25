@@ -27,4 +27,7 @@ public class ArticleDto {
 
     // 1 : N 관계 
     List<ArticleFileDto> files = new ArrayList<>();
+
+    // user와 1:1 관계
+    private UserDto user;
 }
