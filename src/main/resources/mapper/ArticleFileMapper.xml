@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.post_project.mapper.ArticleFileMapper">
+  <insert id="insertArticleFile" parameterType="java.util.List">   <!-- List<ArticleFileDto 타입-->
+        INSERT INTO article_file ( file_name, file_path, file_size, article_id )
+        VALUES 
+        <!-- 위의 parameterType="java.util.List" == collection="list" 같아야 함 -->
+        <foreach collection="list" item="file" separator=",">       <!-- file : ArticleFileDto 타입-->
+            (#{file.fileName}, #{file.filePath}, #{file.fileSize}, #{file.articleId})
+        </foreach>
+  </insert>
+</mapper>

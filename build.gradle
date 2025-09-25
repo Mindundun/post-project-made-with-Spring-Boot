@@ -25,6 +25,9 @@ repositories {
 }
 
 dependencies {
+	// 썸네일 이미지 처리
+	implementation group: 'net.coobird', name: 'thumbnailator', version: '0.4.20'
+
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	// mybatis
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:3.0.4'
@@ -37,6 +40,9 @@ dependencies {
 	// mybatis 단위테스트
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.4' 
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+	// LomBok을 테스트에서 사용
+	
 }
 
 tasks.named('test') {

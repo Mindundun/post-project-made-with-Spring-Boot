@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.post_project.dto.ArticleDto;
 import com.example.post_project.dto.Criteria;
@@ -43,11 +45,25 @@ public class ArticleController {
 
     // 게시글 등록
     // Map<String, Integer로 리턴타입을 갖는 이유 : json과 같이 {"key" : value}    
+    // @PostMapping("/articles")
+    // public ResponseEntity<Map<String, Integer>> postArticle(@RequestBody ArticleDto article) {
+    //     int id = articleService.createArticle(article);
+    //     return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id",id)); // builder pattern
+    // }
+
+    // 게시글 등록
     @PostMapping("/articles")
-    public ResponseEntity<Map<String, Integer>> postArticle(@RequestBody ArticleDto article) {
-        int id = articleService.createArticle(article);
-        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("id",id)); // builder pattern
+    public ResponseEntity<Map<String,Integer>> postArticle(
+        @RequestPart(value = "article") ArticleDto article,         // @RequestPart : json -> java 객체인 article 파싱
+        @RequestPart(value = "files") List<MultipartFile> files) {  // MultipartFile : 스프링 프레임 워크에서 업로드된 파일을 처리하기 위한 인터페이스
+        
+        int id = articleService.createArticle(article, files);
+
+        return ResponseEntity.ok().body(Map.of("id", id));
     }
+
+
+
 
     // 게시글 상세 조회
     // URL의 값은 String 타입이라 @PathVariable로 name이 "id"인 값을 int id에 넣어줌
@@ -86,5 +102,7 @@ public class ArticleController {
         List<ArticleDto> articles = articleService.findArticleList(new Criteria(keyfield, keyword));
         return ResponseEntity.ok().body(articles);
     }
+
+    
 
 }

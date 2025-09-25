@@ -4,11 +4,15 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.post_project.dto.ArticleDto;
+import com.example.post_project.dto.ArticleFileDto;
 import com.example.post_project.dto.Criteria;
 import com.example.post_project.exception.ArticleNotFoundException;
+import com.example.post_project.mapper.ArticleFileMapper;
 import com.example.post_project.mapper.ArticleMapper;
+import com.example.post_project.util.FileUploadUtils;
 
 import lombok.RequiredArgsConstructor;
 
@@ -17,6 +21,8 @@ import lombok.RequiredArgsConstructor;
 public class ArticleService {
     // field
     private final ArticleMapper articleMapper;
+    private final FileUploadUtils fileUploadUtils;
+    private final ArticleFileMapper articleFileMapper;
 
     // @Autowired
     // public ArticleService(ArticleMapper articleMapper) {
@@ -28,11 +34,30 @@ public class ArticleService {
         return articleMapper.selectArticleList();        
     }
 
-    // 게시글 등록
+    // 게시글 등록 : 텍스트만
     // 게시글 등록 후 id를 반환해야하기에 리턴타입을 int
     public int createArticle(ArticleDto article){
         articleMapper.insertArticle(article);
         return article.getId(); // Id를 반환
+    }
+
+    // 게시글 등록 : 텍스트와 파일
+    public int createArticle(ArticleDto article, List<MultipartFile> files){
+        articleMapper.insertArticle(article);
+        int articleId = article.getId();
+
+        List<ArticleFileDto> articleFiles = fileUploadUtils.uploadFiles(files);
+
+        
+        if (articleFiles != null){
+            // articleId 세팅
+            articleFiles.forEach(articleFile -> {
+                articleFile.setArticleId(articleId);
+            });
+            
+            articleFileMapper.insertArticleFile(articleFiles);
+        }
+        return articleId; // Id를 반환
     }
 
     // 게시글 상세 조회
