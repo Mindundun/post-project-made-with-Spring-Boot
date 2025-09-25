@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.post_project.dto.ArticleDto;
@@ -61,6 +62,7 @@ public class ArticleService {
     }
 
     // 게시글 상세 조회
+    // @Transactional(readOnly = true)
     public ArticleDto retrieveArticle(int id) {
         // ArticleNotFoundException 던지기
         // RuntimeException은 throws하지 않고 바로 던질 수 있음

@@ -10,7 +10,4 @@ import com.example.post_project.dto.ArticleFileDto;
 public interface ArticleFileMapper {
     // 파일 등록
     void insertArticleFile(List<ArticleFileDto> files); // 배치처리 예정.
-
-    // 
-
 }

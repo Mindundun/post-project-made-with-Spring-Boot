@@ -19,7 +19,7 @@
      ORDER BY id DESC
   </select>
 
-  <select id="selectArticleById" parameterType="int" resultType="ArticleDto">
+  <!-- <select id="selectArticleById" parameterType="int" resultType="ArticleDto">
     SELECT id       ,
            title    ,
            contents ,
@@ -27,6 +27,41 @@
            reg_date AS regDate
       FROM article
      WHERE id = #{id}
+  </select> -->
+  <resultMap id="selectArticleByIdResultMap" type="ArticleDto">
+      <id property="id" column="id" />
+      <result property="contents" column="contents"/>
+      <result property="title" column="title"/>
+      <result property="regDate" column="regDate"/>
+      <collection property="files" ofType="ArticleFileDto">
+          <id property="id" column="fileId"/>
+          <result property="fileName" column="fileName"/>
+          <result property="fileSize" column="fileSize"/>
+          <result property="filePath" column="filePath"/>
+          <result property="articleId" column="id"/>
+      </collection>
+  </resultMap>
+  <select id="selectArticleById" resultMap="selectArticleByIdResultMap" parameterType="int">
+      SELECT
+          a.id as id,
+          a.writer as writer,
+          a.contents as contents,
+          a.reg_date as regDate,
+          a.title as title,
+          af.id as fileId,
+          af.file_name as fileName,
+          af.file_size as fileSize,
+          af.file_path as filePath,
+          af.article_id as articleId
+
+
+      FROM article as a
+          LEFT OUTER JOIN article_file af
+              ON a.id = af.article_id
+
+
+      WHERE a.id = (#{id})
+
   </select>
 
   <update id="updateArticle" parameterType="ArticleDto">
