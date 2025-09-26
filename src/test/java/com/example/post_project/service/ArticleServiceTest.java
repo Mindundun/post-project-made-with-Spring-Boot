@@ -41,11 +41,13 @@ public class ArticleServiceTest {
         int id = 23;
 
         // When, Then
-        assertThatThrownBy(() -> { // 에러 발생 시 성공. 에러 미 발생 시 실패.
+        assertThatThrownBy(() -> { // 에러 발생 시 성공. 에러 미 발생 시
             articleService.retrieveArticle(id);
             // throw new ArticleNotFoundException();
         }).isInstanceOf(ArticleNotFoundException.class) // 여기까지만 쓰면 타입만 비교
           .hasMessage("id : 23 is null");// 여기까지 쓰면 메세지도 비교  
+
+        
     }
    
 }

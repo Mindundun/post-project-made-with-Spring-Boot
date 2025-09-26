@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -18,6 +19,7 @@ import com.example.post_project.util.FileUploadUtils;
 import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional(readOnly = true)
 @RequiredArgsConstructor // 아래의 생성자 + @Autowired 코드와 같은 처리를 함
 public class ArticleService {
     // field
@@ -37,12 +39,14 @@ public class ArticleService {
 
     // 게시글 등록 : 텍스트만
     // 게시글 등록 후 id를 반환해야하기에 리턴타입을 int
+    @Transactional(readOnly = false)
     public int createArticle(ArticleDto article){
         articleMapper.insertArticle(article);
         return article.getId(); // Id를 반환
     }
 
     // 게시글 등록 : 텍스트와 파일
+    @Transactional(readOnly = false, propagation = Propagation.REQUIRED)
     public int createArticle(ArticleDto article, List<MultipartFile> files){
         articleMapper.insertArticle(article);
         int articleId = article.getId();
@@ -74,11 +78,13 @@ public class ArticleService {
 
     // 게시글 수정
     // 수정 시 리턴할 값이 필요 없으니 void
+    @Transactional(readOnly = false)
     public void modifyArticle(ArticleDto article){
         articleMapper.updateArticle(article);
     }
 
     // 게시글 삭제
+    @Transactional(readOnly = false)
     public void removeArticle(int id){
         if (articleMapper.selectArticleById(id) == null){
             throw new ArticleNotFoundException("id : " + id + " is null");

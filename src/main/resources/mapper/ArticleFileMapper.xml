@@ -5,7 +5,7 @@
 
 <mapper namespace="com.example.post_project.mapper.ArticleFileMapper">
   <insert id="insertArticleFile" parameterType="java.util.List">   <!-- List<ArticleFileDto 타입-->
-        INSERT INTO article_file ( file_name, file_path, file_size, article_id )
+        INSERT INTO article_file12 ( file_name, file_path, file_size, article_id )
         VALUES 
         <!-- 위의 parameterType="java.util.List" == collection="list" 같아야 함 -->
         <foreach collection="list" item="file" separator=",">       <!-- file : ArticleFileDto 타입-->
