@@ -16,7 +16,7 @@ import lombok.ToString;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@ToString // tostring메소드를 자동적으로 만들어줌. 추후 ArticleServiceTest에서 사용
 public class ArticleDto {
     // field, property
     private int id;
@@ -30,4 +30,5 @@ public class ArticleDto {
 
     // user와 1:1 관계
     private UserDto user;
+
 }

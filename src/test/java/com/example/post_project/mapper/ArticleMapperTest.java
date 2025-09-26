@@ -121,7 +121,5 @@ public class ArticleMapperTest {
         ArticleDto foundArticle = articleMapper.selectArticleById(id);
         // Then
         assertThat(foundArticle).isNull();
-        
-
     }
 }
