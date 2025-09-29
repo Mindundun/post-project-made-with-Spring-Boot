@@ -1,0 +1,10 @@
+server:
+  port: 8080
+  address: localhost
+
+logging:
+  level:
+    root: debug
+    com.example.post_project.mapper: DEBUG
+    org.mybatis: DEBUG
+    org.springframework.jdbc.core: DEBUG

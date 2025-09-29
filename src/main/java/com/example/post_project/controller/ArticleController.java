@@ -3,6 +3,9 @@ package com.example.post_project.controller;
 import java.util.List;
 import java.util.Map;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -24,13 +27,19 @@ import com.example.post_project.service.ArticleService;
 // import com.mysql.cj.protocol.x.Ok;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 // @ResponseBody + @Controller
 @RestController // Rest API 사용 시 
 @RequestMapping("/api/v1")
 @RequiredArgsConstructor
+@Slf4j // private static Logger log = LoggerFactory.getLogger(ArticleController.class);
 public class ArticleController {
-    // field
+
+    // Logger : 로그 정보를 생성할 주체
+    // private static Logger log = LoggerFactory.getLogger(ArticleController.class);
+
+    // field : DI
     private final ArticleService articleService;
 
     // 게시글 전체 조회
@@ -88,6 +97,7 @@ public class ArticleController {
     // 게시글 삭제
     @DeleteMapping("/articles/{id}")
     public ResponseEntity<String> deleteArticle(@PathVariable(name="id") int id) {
+        log.info("article id : {}", id); // id의 값을 log로 찍음
         articleService.removeArticle(id);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body("");
     }
@@ -98,7 +108,8 @@ public class ArticleController {
         @RequestParam(value = "keyfield", required = false, defaultValue = "") String keyfield,
         @RequestParam(value = "keyword", required = false, defaultValue = "") String keyword ) 
     {   
-        System.out.println("keyfield : " + keyfield + ", keyword : " + keyword);
+        log.info("keyfield : {}, keyword : {}", keyfield, keyword);
+        // System.out.println("keyfield : " + keyfield + ", keyword : " + keyword);
         List<ArticleDto> articles = articleService.findArticleList(new Criteria(keyfield, keyword));
         return ResponseEntity.ok().body(articles);
     }

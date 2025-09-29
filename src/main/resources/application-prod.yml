@@ -1,0 +1,10 @@
+server:
+  port: 9000
+  address: localhost
+
+logging:
+  level:
+    root: INFO       
+    com.example.post_project.mapper: INFO
+    org.mybatis: INFO
+    org.springframework.jdbc.core: INFO
