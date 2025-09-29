@@ -70,10 +70,7 @@ public class ArticleController {
 
         return ResponseEntity.ok().body(Map.of("id", id));
     }
-
-
-
-
+    
     // 게시글 상세 조회
     // URL의 값은 String 타입이라 @PathVariable로 name이 "id"인 값을 int id에 넣어줌
     // GetMapping의 id와 PathVariable의 name의 id가 같아야함.
